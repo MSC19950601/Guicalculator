@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.math.BigDecimal;
 
 /**
  * Created by kururu on 2015/10/29.
@@ -23,6 +24,7 @@ public class calc extends JFrame implements ActionListener {
 
     static Double
             firstNum, secondNum, ans, plusminus;
+    static BigDecimal firstNumInBig ,secondNumInBig;
     static boolean
             addclick = false, subclick = false, mulclick = false, divclick = false, powerclick = false, sqrtclick = false,
             clearfield;
@@ -206,7 +208,10 @@ public class calc extends JFrame implements ActionListener {
                 subclick = false;
             }
             if(mulclick){
-                ans = firstNum * secondNum;
+
+                firstNumInBig = new BigDecimal(Double.toString(firstNum));
+                secondNumInBig = new BigDecimal(Double.toString(secondNum));
+                ans = firstNumInBig.multiply(secondNumInBig).doubleValue();
                 ansField.setText(String.valueOf(ans));
                 mulclick = false;
             }
