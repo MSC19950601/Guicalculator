@@ -24,7 +24,7 @@ public class calc extends JFrame implements ActionListener {
     static Double
             firstNum, secondNum, ans, plusminus;
     static boolean
-            addclick = false, subclick = false, mulclick = false, divclick = false,
+            addclick = false, subclick = false, mulclick = false, divclick = false, powerclick = false, sqrtclick = false,
             clearfield;
 
     public calc(){
@@ -36,20 +36,22 @@ public class calc extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle(CALCULATOR_TITLE);
         setResizable(false);
-        setSize(310,495);
+        setSize(310,525);
         setLocationRelativeTo(null);
         panelOfCalc = new JPanel();
-        panelOfCalc.setSize(310,495);
+        panelOfCalc.setSize(310,525);
         panelOfCalc.setLayout(null);
 
         //set operation buttons
-        makeOperationButton("+",70,70,230,235);
-        makeOperationButton("-",70,70,230,160);
-        makeOperationButton("*",70,70,230,85);
-        makeOperationButton("/",70,70,155,85);
+        makeOperationButton("+",70,70,230,310);
+        makeOperationButton("-",70,70,230,235);
+        makeOperationButton("*",70,70,230,160);
+        makeOperationButton("/",70,70,230,85);
+        makeOperationButton("^2",70,70,155,85);
+        makeOperationButton("√",70,70,230,385);
 
         //set number buttons
-        makeNumberButton("0",145,70,5,385);
+        makeNumberButton("0",70,70,5,385);
         makeNumberButton("1",70,70,5,310);
         makeNumberButton("2",70,70,80,310);
         makeNumberButton("3",70,70,155,310);
@@ -62,8 +64,8 @@ public class calc extends JFrame implements ActionListener {
 
         //set other buttons
         equalsButton = new JButton("=");
-        equalsButton.setSize(70,145);
-        equalsButton.setLocation(230, 310);
+        equalsButton.setSize(70,70);
+        equalsButton.setLocation(155,385);
         equalsButton.setFont(new Font("Arial", Font.BOLD, 24));
         clearButton = new JButton("C");
         clearButton.setSize(70,70);
@@ -71,7 +73,7 @@ public class calc extends JFrame implements ActionListener {
         clearButton.setFont(new Font("Arial", Font.BOLD, 24));
         decimalButton = new JButton(".");
         decimalButton.setSize(70,70);
-        decimalButton.setLocation(155,385);
+        decimalButton.setLocation(80,385);
         decimalButton.setFont(new Font("Arial", Font.BOLD, 24));
         plusMinusButton = new JButton("+/-");
         plusMinusButton.setSize(70,70);
@@ -142,6 +144,10 @@ public class calc extends JFrame implements ActionListener {
                         mulclick = true;
                     if(operationName == "/")
                         divclick = true;
+                    if(operationName == "^2")
+                        powerclick = true;
+                    if(operationName == "√")
+                        sqrtclick = true;
                     firstNum = Double.parseDouble(String.valueOf(ansField.getText()));
                     clearfield = true;
                 }
@@ -212,6 +218,18 @@ public class calc extends JFrame implements ActionListener {
                     ansField.setText(String.valueOf(ans));
                 divclick = false;
             }
+            if(powerclick){
+                secondNum = firstNum;
+                //ans = firstNum * secondNum;
+                ans = Math.pow(firstNum,2);
+                ansField.setText(String.valueOf(ans));
+                powerclick = false;
+            }
+            if(sqrtclick){
+                ans = Math.sqrt(firstNum);
+                ansField.setText(String.valueOf(ans));
+                sqrtclick = false;
+            }
         }
 
         if(e.getSource()==plusMinusButton){
@@ -232,6 +250,7 @@ public class calc extends JFrame implements ActionListener {
             subclick = false;
             mulclick = false;
             divclick = false;
+            powerclick = false;
         }
 
         if(e.getSource()==decimalButton){
