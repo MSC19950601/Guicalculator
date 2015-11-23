@@ -7,7 +7,7 @@ import java.awt.event.*;
  */
 public class calc extends JFrame implements ActionListener {
 
-    private static final String CALCULATOR_TITLE = "My simple calculator";
+    private static final String CALCULATOR_TITLE = "Calculator";
 
     private static JPanel panelOfCalc;
 
@@ -17,6 +17,10 @@ public class calc extends JFrame implements ActionListener {
 
     static JTextField ansField;
 
+    static JMenu fileMenu,managementMenu,helpMenu;
+
+    static JMenuItem exit,scientific,about;
+
     static Double
             firstNum, secondNum, ans, plusminus;
     static boolean
@@ -24,6 +28,11 @@ public class calc extends JFrame implements ActionListener {
             clearfield;
 
     public calc(){
+
+        JMenuBar menkar = new JMenuBar();
+        setMenuBar(menkar);
+        setJMenuBar(menkar);
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle(CALCULATOR_TITLE);
         setResizable(false);
@@ -91,6 +100,30 @@ public class calc extends JFrame implements ActionListener {
         equalsButton.addActionListener(this);
     }
 
+    private void setMenuBar(JMenuBar menkar) {
+
+        fileMenu = new JMenu("fileMenu");
+        managementMenu = new JMenu("managementMenu");
+        helpMenu = new JMenu("help");
+
+        exit = new JMenuItem("exit");
+        scientific = new JMenuItem("scientific");
+        about = new JMenuItem("about");
+
+        menkar.add(fileMenu);
+        menkar.add(managementMenu);
+        menkar.add(helpMenu);
+
+        fileMenu.add(exit);
+        managementMenu.add(scientific);
+        helpMenu.add(about);
+
+        exit.addActionListener(this);
+        scientific.addActionListener(this);
+        about.addActionListener(this);
+
+    }
+
     public void makeOperationButton(final String operationName, int widthOfSize, int heightOfSize, int xLocation, int yloction){
         final JButton operationButton = new JButton(operationName);
         operationButton.setFont(new Font("Arial",Font.BOLD,24));
@@ -140,6 +173,18 @@ public class calc extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e){
+
+        if(e.getSource() == exit){
+            System.exit(0);
+        }
+
+        if(e.getSource() == scientific){
+            JOptionPane.showMessageDialog(null, "Tips: science-based untapped！","scientific",JOptionPane.WARNING_MESSAGE);
+        }
+
+        if(e.getSource() == about){
+            JOptionPane.showMessageDialog(null, "A simple GUI calculator made by kururu007 in whut.\n"+"Thank you for use!","about",JOptionPane.PLAIN_MESSAGE);
+        }
 
         if(e.getSource() == equalsButton){
             secondNum = Double.parseDouble(String.valueOf(ansField.getText()));
